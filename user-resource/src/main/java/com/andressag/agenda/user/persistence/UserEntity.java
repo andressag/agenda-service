@@ -1,15 +1,15 @@
 package com.andressag.agenda.user.persistence;
 
 import com.andressag.agenda.model.Profile;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZoneOffset;
 import java.util.Date;
-import java.util.List;
+import java.util.Set;
 
 import static java.time.ZoneId.systemDefault;
 import static javax.persistence.TemporalType.TIMESTAMP;
@@ -42,16 +42,16 @@ public class UserEntity {
     @Column(name = "profileId")
     @ElementCollection(targetClass = Profile.class)
     @CollectionTable(name = "userProfiles", joinColumns = @JoinColumn(name = "userId"))
-    private List<Profile> profiles;
+    private Set<Profile> profiles;
 
     @PrePersist
-    public void creationTimestamp() {
+    void creationTimestamp() {
         this.creationDate = getCurrentDate();
         this.updateDate = this.creationDate;
     }
 
     @PreUpdate
-    public void updateTimestamp() {
+    void updateTimestamp() {
         this.updateDate = getCurrentDate();
     }
 
