@@ -13,16 +13,37 @@
     <artifactId>user-resource</artifactId>
 
     <dependencies>
+
+        <!-- Model -->
         <dependency>
             <groupId>com.andressag</groupId>
             <artifactId>agenda-model</artifactId>
             <version>${project.version}</version>
         </dependency>
 
+        <!-- Spring Data & REST -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-rest</artifactId>
         </dependency>
+
+        <!-- Spring test -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- H2: In Memory Database -->
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>
