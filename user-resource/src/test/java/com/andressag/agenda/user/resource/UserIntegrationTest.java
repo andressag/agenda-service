@@ -53,4 +53,21 @@ public class UserIntegrationTest {
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(response.getBody()).isNotNull();
     }
+
+    @Test
+    public void shouldReturnFindUserError() {
+
+        // Given
+        given(repository.findAll()).willThrow(RuntimeException.class);
+
+        // When
+        final ResponseEntity<UserError> response = restTemplate.getForEntity("/users", UserError.class);
+
+        // Then
+        assertThat(response).isNotNull();
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR);
+        assertThat(response.getBody()).isNotNull();
+        assertThat(response.getBody().getErrorCode()).isEqualTo(7000);
+
+    }
 }

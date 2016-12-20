@@ -43,7 +43,7 @@ public class UserResourceTest {
         when(repository.findAll()).thenReturn(singletonList(entity));
 
         // When
-        final Iterable<UserView> results = this.resource.findAll();
+        final Iterable<UserView> results = this.resource.findAll(null);
 
         // Then
         assertThat(results).isNotNull().hasSize(1);
