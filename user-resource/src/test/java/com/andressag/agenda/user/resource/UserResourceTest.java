@@ -44,7 +44,7 @@ public class UserResourceTest {
 
         // Given
         UserEntity entity = UserEntity.builder()
-                .login("rodrigo")
+                .login("mocked-user")
                 .build();
         when(repository.findAll()).thenReturn(singletonList(entity));
 
@@ -55,7 +55,7 @@ public class UserResourceTest {
         verify(repository).findAll();
         assertThat(results).isNotNull().hasSize(1);
         UserView firstUser = results.iterator().next();
-        assertThat(firstUser.getLogin()).isEqualTo("rodrigo");
+        assertThat(firstUser.getLogin()).isEqualTo("mocked-user");
     }
 
     @Test
@@ -86,7 +86,7 @@ public class UserResourceTest {
         Long userId = 12345L;
         UserEntity entity = UserEntity.builder()
                 .id(userId)
-                .login("rodrigo")
+                .login("mocked-user")
                 .build();
         when(repository.findOne(userId)).thenReturn(entity);
 
@@ -96,7 +96,7 @@ public class UserResourceTest {
         // Then
         verify(repository).findOne(eq(userId));
         assertThat(result).isNotNull();
-        assertThat(result.getLogin()).isEqualTo("rodrigo");
+        assertThat(result.getLogin()).isEqualTo("mocked-user");
     }
 
     @Test
@@ -128,7 +128,7 @@ public class UserResourceTest {
         final Set<Profile> profiles = new HashSet<>();
         profiles.add(CUSTOMER);
         final UserEntity entity = UserEntity.builder()
-                .login("garou")
+                .login("mocked-user")
                 .profiles(profiles)
                 .password("1234556")
                 .build();
@@ -140,7 +140,7 @@ public class UserResourceTest {
         // Then
         verify(repository).save(eq(entity));
         assertThat(result).isNotNull();
-        assertThat(result.getLogin()).isEqualTo("garou");
+        assertThat(result.getLogin()).isEqualTo("mocked-user");
     }
 
     @Test
@@ -151,7 +151,7 @@ public class UserResourceTest {
         final Set<Profile> profiles = new HashSet<>();
         profiles.add(CUSTOMER);
         final UserEntity entity = UserEntity.builder()
-                .login("garou")
+                .login("mocked-user")
                 .profiles(profiles)
                 .password("1234556")
                 .build();
@@ -177,7 +177,7 @@ public class UserResourceTest {
         final Set<Profile> profiles = new HashSet<>();
         profiles.add(CUSTOMER);
         final UserEntity entity = UserEntity.builder()
-                .login("garou")
+                .login("mocked-user")
                 .profiles(profiles)
                 .password("123****")
                 .build();
@@ -189,7 +189,7 @@ public class UserResourceTest {
         // Then
         verify(repository).save(eq(entity));
         assertThat(result).isNotNull();
-        assertThat(result.getLogin()).isEqualTo("garou");
+        assertThat(result.getLogin()).isEqualTo("mocked-user");
     }
 
     @Test
@@ -200,7 +200,7 @@ public class UserResourceTest {
         final Set<Profile> profiles = new HashSet<>();
         profiles.add(CUSTOMER);
         final UserEntity entity = UserEntity.builder()
-                .login("garou")
+                .login("mocked-user")
                 .profiles(profiles)
                 .password("1234556")
                 .build();
