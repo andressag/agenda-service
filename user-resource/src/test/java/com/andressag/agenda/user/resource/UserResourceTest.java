@@ -20,6 +20,7 @@ import static java.util.Collections.singletonList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Fail.failBecauseExceptionWasNotThrown;
 import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -156,6 +157,7 @@ public class UserResourceTest {
                 .password("1234556")
                 .build();
         when(repository.save(eq(entity))).thenThrow(new RuntimeException("mocked"));
+        when(request.getRemoteAddr()).thenReturn(expectedIp);
 
         // When
         try {
@@ -164,7 +166,7 @@ public class UserResourceTest {
         } catch (UserResourceException exception) {
 
             // Then
-            verify(repository.save(eq(entity)));
+            verify(repository).save(eq(entity));
             assertThat(exception.getIpAddress()).isEqualTo(expectedIp);
             assertThat(exception.getErrorTimestamp()).isNotNull();
         }
@@ -205,6 +207,7 @@ public class UserResourceTest {
                 .password("1234556")
                 .build();
         when(repository.save(eq(entity))).thenThrow(new RuntimeException("mocked"));
+        when(request.getRemoteAddr()).thenReturn(expectedIp);
 
         // When
         try {
@@ -213,7 +216,7 @@ public class UserResourceTest {
         } catch (UserResourceException exception) {
 
             // Then
-            verify(repository.save(eq(entity)));
+            verify(repository).save(eq(entity));
             assertThat(exception.getIpAddress()).isEqualTo(expectedIp);
             assertThat(exception.getErrorTimestamp()).isNotNull();
         }
@@ -239,6 +242,9 @@ public class UserResourceTest {
         // Given
         final String expectedIp = "10.0.0.1";
         Long userId = 12345L;
+
+        doThrow(new RuntimeException("mocked")).when(repository).delete(eq(userId));
+        when(request.getRemoteAddr()).thenReturn(expectedIp);
 
         // When
         try {
