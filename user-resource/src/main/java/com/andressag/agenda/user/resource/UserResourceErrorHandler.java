@@ -1,7 +1,7 @@
 package com.andressag.agenda.user.resource;
 
 import com.andressag.agenda.model.AgendaErrors;
-import com.andressag.agenda.user.exception.FindUserException;
+import com.andressag.agenda.user.exception.UserResourceException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,8 +14,8 @@ import static org.springframework.http.MediaType.APPLICATION_JSON;
 @RestControllerAdvice
 public class UserResourceErrorHandler {
 
-    @ExceptionHandler(FindUserException.class)
-    public ResponseEntity<UserError> findUserException(FindUserException exception) {
+    @ExceptionHandler(UserResourceException.class)
+    public ResponseEntity<UserError> findUserException(UserResourceException exception) {
         log.error("Error while querying users, request by IP {}", exception.getIpAddress());
         final UserError error = UserError.builder()
                 .errorCode(AgendaErrors.INTERNAL_ERROR.getCode())

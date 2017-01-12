@@ -1,6 +1,6 @@
 package com.andressag.agenda.user.resource;
 
-import com.andressag.agenda.user.exception.FindUserException;
+import com.andressag.agenda.user.exception.UserResourceException;
 import org.junit.Test;
 import org.springframework.http.ResponseEntity;
 
@@ -14,7 +14,7 @@ public class UserResourceErrorHandlerTest {
     public void shouldReturnResponseEntity() {
 
         // Given
-        final FindUserException exception = new FindUserException(new Exception());
+        final UserResourceException exception = new UserResourceException(new Exception());
 
         // When
         final ResponseEntity<UserError> results = new UserResourceErrorHandler().findUserException(exception);

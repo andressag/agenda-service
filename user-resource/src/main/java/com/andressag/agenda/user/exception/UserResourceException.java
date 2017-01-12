@@ -7,12 +7,12 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
-public class FindUserException extends RuntimeException {
+public class UserResourceException extends RuntimeException {
 
     private String ipAddress;
     private LocalDateTime errorTimestamp;
 
-    public FindUserException(Throwable cause) {
+    public UserResourceException(Throwable cause) {
         super(cause);
     }
 }
