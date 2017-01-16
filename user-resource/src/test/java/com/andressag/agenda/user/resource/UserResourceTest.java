@@ -20,9 +20,9 @@ import static java.util.Collections.singletonList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Fail.failBecauseExceptionWasNotThrown;
 import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
+import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 
 @RunWith(MockitoJUnitRunner.class)
 public class UserResourceTest {
@@ -257,6 +257,47 @@ public class UserResourceTest {
             assertThat(exception.getIpAddress()).isEqualTo(expectedIp);
             assertThat(exception.getErrorTimestamp()).isNotNull();
         }
+    }
+
+    @Test
+    public void testAuthenticate() {
+
+        // Given
+        final UserEntity entity = UserEntity.builder()
+                .login("mocked-user")
+                .password("1234556")
+                .build();
+        final String authorizationHeader = "Basic bW9ja2VkLXVzZXI6MTIzNDU1Ng==";
+        when(repository.findUser(eq(entity.getLogin()), eq(entity.getPassword()))).thenReturn(entity);
+
+        // When
+        final ResponseEntity<UserEntity> response = this.resource.authenticate(authorizationHeader);
+
+        // Then
+        assertThat(response.getBody()).isNotNull();
+        assertThat(response.getBody()).isEqualTo(entity);
+    }
+
+    @Test
+    public void testAuthenticateWithNullHeader() {
+
+        // When
+        final ResponseEntity<UserEntity> response = this.resource.authenticate(null);
+
+        // Then
+        assertThat(response.getBody()).isNull();
+        assertThat(response.getStatusCode()).isEqualTo(UNAUTHORIZED);
+    }
+
+    @Test
+    public void testAuthenticateWithInvalidEncoding() {
+
+        // When
+        final ResponseEntity<UserEntity> response = this.resource.authenticate("Basic test:test");
+
+        // Then
+        assertThat(response.getBody()).isNull();
+        assertThat(response.getStatusCode()).isEqualTo(UNAUTHORIZED);
     }
 
 }

@@ -5,16 +5,18 @@ import com.andressag.agenda.user.persistence.UserEntity;
 import com.andressag.agenda.user.persistence.UserRepository;
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.websocket.server.PathParam;
 import java.time.LocalDateTime;
+import java.util.Base64;
 import java.util.LinkedList;
 import java.util.List;
 
-import static org.springframework.http.HttpStatus.CREATED;
-import static org.springframework.http.HttpStatus.NO_CONTENT;
+import static java.util.Objects.nonNull;
+import static org.springframework.http.HttpStatus.*;
 
 @RestController
 @RequestMapping(path = "/users")
@@ -80,6 +82,48 @@ class UserResource {
             propagateException(request, error);
         }
         return ResponseEntity.status(NO_CONTENT).build();
+    }
+
+    @GetMapping(path = "/authenticate")
+    ResponseEntity<UserEntity> authenticate(@RequestHeader("Authorization") String authorizationHeader) {
+
+        String[] headerValue = decodeRequestHeader(authorizationHeader);
+        if (nonNull(headerValue)) {
+            String login = headerValue[0];
+            String pwd = headerValue[1];
+
+            UserEntity user = findUser(login, pwd);
+            if (nonNull(user)) {
+                return ResponseEntity.status(HttpStatus.ACCEPTED)
+                        .body(user);
+            }
+        }
+        return ResponseEntity.status(UNAUTHORIZED)
+                .body(null);
+    }
+
+    private UserEntity findUser(String login, String pwd) {
+        UserEntity user;
+        try {
+            user = repository.findUser(login, pwd);
+        } catch (Exception e) {
+            return null;
+        }
+        return user;
+    }
+
+    private String[] decodeRequestHeader(String header) {
+        if (nonNull(header) && header.startsWith("Basic ")) {
+            byte[] decodeHeader;
+            try {
+                final String[] tokens = header.split("Basic ");
+                decodeHeader = Base64.getDecoder().decode(tokens[1].getBytes());
+            } catch (Exception error) {
+                return null;
+            }
+            return new String(decodeHeader).split(":");
+        }
+        return null;
     }
 
 
