@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-class UserError {
+class EntityError {
 
     private Integer errorCode;
     private String errorDetails;

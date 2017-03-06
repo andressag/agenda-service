@@ -1,8 +1,8 @@
 package com.andressag.agenda.user.resource;
 
 import com.andressag.agenda.model.Profile;
-import com.andressag.agenda.user.persistence.UserEntity;
-import com.andressag.agenda.user.persistence.UserRepository;
+import com.andressag.agenda.user.persistence.model.UserEntity;
+import com.andressag.agenda.user.persistence.repository.UserRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +40,7 @@ public class UserIntegrationTest {
         Set<Profile> profiles = new HashSet<>();
         profiles.add(ADMIN);
         UserEntity entity = UserEntity.builder()
-                .login("rodrigo")
+                .login("admin")
                 .profiles(profiles)
                 .build();
         given(repository.findAll()).willReturn(singletonList(entity));
@@ -61,7 +61,7 @@ public class UserIntegrationTest {
         given(repository.findAll()).willThrow(RuntimeException.class);
 
         // When
-        final ResponseEntity<UserError> response = restTemplate.getForEntity("/users", UserError.class);
+        final ResponseEntity<EntityError> response = restTemplate.getForEntity("/users", EntityError.class);
 
         // Then
         assertThat(response).isNotNull();

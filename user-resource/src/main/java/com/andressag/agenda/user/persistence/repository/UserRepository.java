@@ -1,5 +1,6 @@
-package com.andressag.agenda.user.persistence;
+package com.andressag.agenda.user.persistence.repository;
 
+import com.andressag.agenda.user.persistence.model.UserEntity;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;

@@ -17,7 +17,7 @@ public class UserResourceErrorHandlerTest {
         final UserResourceException exception = new UserResourceException(new Exception());
 
         // When
-        final ResponseEntity<UserError> results = new UserResourceErrorHandler().findUserException(exception);
+        final ResponseEntity<EntityError> results = new UserResourceErrorHandler().findUserException(exception);
 
         // Then
         assertThat(results).isNotNull();

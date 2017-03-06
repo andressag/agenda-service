@@ -14,7 +14,7 @@
 
     <dependencies>
 
-        <!-- Model -->
+        <!-- model -->
         <dependency>
             <groupId>com.andressag</groupId>
             <artifactId>agenda-model</artifactId>
