@@ -2,8 +2,9 @@ package com.andressag.agenda.user.resource;
 
 import com.andressag.agenda.model.Profile;
 import com.andressag.agenda.user.exception.UserResourceException;
-import com.andressag.agenda.user.persistence.UserEntity;
-import com.andressag.agenda.user.persistence.UserRepository;
+import com.andressag.agenda.user.persistence.model.UserEntity;
+import com.andressag.agenda.user.persistence.repository.UserRepository;
+import com.andressag.agenda.user.resource.view.UserView;
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.junit.Before;
 import org.junit.Test;
@@ -21,7 +22,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Fail.failBecauseExceptionWasNotThrown;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.*;
-import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 
 @RunWith(MockitoJUnitRunner.class)

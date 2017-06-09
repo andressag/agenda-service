@@ -1,4 +1,4 @@
-package com.andressag.agenda.user.resource;
+package com.andressag.agenda.user.resource.view;
 
 import com.andressag.agenda.model.Profile;
 import lombok.AllArgsConstructor;
@@ -19,5 +19,4 @@ public class UserView {
     private LocalDateTime createdDate;
     private LocalDateTime lastUpdatedDate;
     private Set<Profile> profiles;
-
 }

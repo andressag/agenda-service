@@ -1,4 +1,4 @@
-package com.andressag.agenda.user.persistence;
+package com.andressag.agenda.user.persistence.model;
 
 import org.junit.Test;
 

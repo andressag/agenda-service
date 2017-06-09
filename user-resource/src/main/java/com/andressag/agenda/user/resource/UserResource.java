@@ -1,8 +1,10 @@
 package com.andressag.agenda.user.resource;
 
 import com.andressag.agenda.user.exception.UserResourceException;
-import com.andressag.agenda.user.persistence.UserEntity;
-import com.andressag.agenda.user.persistence.UserRepository;
+import com.andressag.agenda.user.persistence.model.UserEntity;
+import com.andressag.agenda.user.persistence.repository.UserRepository;
+import com.andressag.agenda.user.resource.view.UserView;
+import lombok.AllArgsConstructor;
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,14 +22,10 @@ import static org.springframework.http.HttpStatus.*;
 
 @RestController
 @RequestMapping(path = "/users")
+@AllArgsConstructor(onConstructor = @__(@Autowired))
 class UserResource {
 
     private final UserRepository repository;
-
-    @Autowired
-    UserResource(UserRepository repository) {
-        this.repository = repository;
-    }
 
     @GetMapping
     Iterable<UserView> findAll(HttpServletRequest request) {
